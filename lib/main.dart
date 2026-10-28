@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/themes/app_theme.dart';
 
 void main() {
   runApp(const AutoLocationApp());
@@ -12,15 +13,25 @@ class AutoLocationApp extends StatelessWidget {
     return MaterialApp(
       title: 'DEVMOB-AutoLocation',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const Scaffold(
+      theme: AppTheme.lightTheme,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('DEVMOB-AutoLocation'),
+        ),
         body: Center(
-          child: Text(
-            'DEVMOB-AutoLocation - Partie 1 Validée !',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Charte graphique intégrée !',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Bouton Principal'),
+              ),
+            ],
           ),
         ),
       ),
