@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'explorer_page.dart'; 
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -10,9 +11,8 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
 
-  // Liste temporaire des écrans pour chaque onglet (temporaire....)
   final List<Widget> _pages = [
-    const Center(child: Text('Accueil / Explorer', style: TextStyle(fontSize: 18))),
+    const ExplorerPage(),
     const Center(child: Text('Mes Réservations', style: TextStyle(fontSize: 18))),
     const Center(child: Text('Carte interactive', style: TextStyle(fontSize: 18))),
     const Center(child: Text('Assistance', style: TextStyle(fontSize: 18))),
@@ -23,7 +23,7 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AutoLocation'),
+        title: const Text('AutoLocationApp'),
       ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -33,7 +33,7 @@ class _MainLayoutState extends State<MainLayout> {
             _currentIndex = index;
           });
         },
-        type: BottomNavigationBarType.fixed, // Nécessaire s'il y a plus de 3 éléments
+        type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).colorScheme.primary,
         unselectedItemColor: Colors.grey,
         items: const [
