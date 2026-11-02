@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'vehicule_card.dart';
 
 class ExplorerPage extends StatelessWidget {
   const ExplorerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Liste de test typée correctement
+    final List<Map<String, dynamic>> fauxVehicules = [
+      {'modele': 'Renault Clio 5', 'type': 'Citadine', 'prix': 90.0},
+      {'modele': 'Hyundai Tucson', 'type': 'SUV', 'prix': 180.0},
+      {'modele': 'Peugeot 308', 'type': 'Berline', 'prix': 120.0},
+      {'modele': 'Volkswagen Golf 8', 'type': 'Berline', 'prix': 150.0},
+    ];
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -29,10 +38,7 @@ class ExplorerPage extends StatelessWidget {
             // Filtres rapides (Catégories)
             const Text(
               'Catégories',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             SizedBox(
@@ -50,21 +56,29 @@ class ExplorerPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Liste des véhicules (pour l'instant, un message temporaire)
+            // Liste des véhicules disponibles
             const Text(
               'Véhicules disponibles',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             Expanded(
-              child: Center(
-                child: Text(
-                  'La liste des véhicules s\'affichera ici prochainement.',
-                  style: TextStyle(color: Colors.grey[600]),
-                ),
+              child: ListView.builder(
+                itemCount: fauxVehicules.length,
+                itemBuilder: (context, index) {
+                  final vehicule = fauxVehicules[index];
+                  return VehiculeCard(
+                    marqueModele: vehicule['modele'],
+                    type: vehicule['type'],
+                    prixJour: vehicule['prix'],
+                    imagePath: '',
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Sélection de : ${vehicule['modele']}')),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],
