@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'reservation_step1_page.dart';
 
 class VehiculeDetailPage extends StatelessWidget {
   final String modele;
@@ -100,9 +101,10 @@ class VehiculeDetailPage extends StatelessWidget {
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Demande de réservation enregistrée !'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ReservationStep1Page(),
                           ),
                         );
                       },

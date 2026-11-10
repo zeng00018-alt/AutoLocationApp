@@ -14,17 +14,12 @@ class _ExplorerPageState extends State<ExplorerPage> {
   String _categorieActuelle = 'Tous';
 
   // Liste complète de tous nos véhicules de test
- final List<Map<String, dynamic>> _tousLesVehicules = [
-
-      {'modele': 'Renault Clio 5', 'type': 'Citadine', 'prix': 90.0},
-
-      {'modele': 'Hyundai Tucson', 'type': 'SUV', 'prix': 180.0},
-
-      {'modele': 'Peugeot 308', 'type': 'Berline', 'prix': 120.0},
-
-      {'modele': 'Volkswagen Golf 8', 'type': 'Berline', 'prix': 150.0},
-
-    ]; 
+  final List<Map<String, dynamic>> _tousLesVehicules = [
+    {'modele': 'Renault Clio 5', 'type': 'Citadine', 'prix': 90.0},
+    {'modele': 'Hyundai Tucson', 'type': 'SUV', 'prix': 180.0},
+    {'modele': 'Peugeot 308', 'type': 'Berline', 'prix': 120.0},
+    {'modele': 'Volkswagen Golf 8', 'type': 'Berline', 'prix': 150.0},
+  ]; 
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +38,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Rechercher un véhicule (marque, modèle)...',
-                prefixIcon: const Icon(Icons.search),
+                prefixIcon: const Icon(Icons.search, color: Color(0xFF1E3A8A)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
@@ -57,7 +52,11 @@ class _ExplorerPageState extends State<ExplorerPage> {
             // Filtres rapides (Catégories)
             const Text(
               'Catégories',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto', // Conforme aux polices recommandées
+              ),
             ),
             const SizedBox(height: 10),
             SizedBox(
@@ -68,7 +67,8 @@ class _ExplorerPageState extends State<ExplorerPage> {
                   _buildFiltreChip('Tous'),
                   _buildFiltreChip('Citadine'),
                   _buildFiltreChip('SUV'),
-                  _buildFilltreBerlineOuChauffeur('Berline'),
+                  _buildFiltreChip('Berline'),
+                  _buildFiltreChip('Avec chauffeur'), // Ajout conforme au cahier des charges
                 ],
               ),
             ),
@@ -77,7 +77,10 @@ class _ExplorerPageState extends State<ExplorerPage> {
             // Titre dynamique de la liste
             Text(
               'Véhicules disponibles (${vehiculesAffiches.length})',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 10),
 
@@ -121,7 +124,7 @@ class _ExplorerPageState extends State<ExplorerPage> {
     );
   }
 
-  // Widget helper pour construire un chip de filtre interactif
+  // Widget helper pour construire un chip de filtre interactif aux couleurs de la charte
   Widget _buildFiltreChip(String label) {
     final estActif = _categorieActuelle == label;
     return Container(
@@ -129,6 +132,12 @@ class _ExplorerPageState extends State<ExplorerPage> {
       child: ChoiceChip(
         label: Text(label),
         selected: estActif,
+        selectedColor: const Color(0xFF1E3A8A).withOpacity(0.15),
+        backgroundColor: Colors.grey[100],
+        labelStyle: TextStyle(
+          color: estActif ? const Color(0xFF1E3A8A) : Colors.black87,
+          fontWeight: estActif ? FontWeight.bold : FontWeight.normal,
+        ),
         onSelected: (bool selected) {
           setState(() {
             _categorieActuelle = label;
@@ -136,9 +145,5 @@ class _ExplorerPageState extends State<ExplorerPage> {
         },
       ),
     );
-  }
-
-  Widget _buildFilltreBerlineOuChauffeur(String label) {
-    return _buildFiltreChip(label);
   }
 }

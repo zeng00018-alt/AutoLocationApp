@@ -23,8 +23,14 @@ class _MainLayoutState extends State<MainLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  title: const Text('DEVMOB-AutoLocation'),
-), 
+        title: const Text(
+          'DEVMOB-AutoLocation',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: const Color.fromARGB(255, 5, 17, 49),
+        centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
+      ),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
