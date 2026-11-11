@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'reservation_step2_page.dart';
 
 class ReservationStep1Page extends StatefulWidget {
   const ReservationStep1Page({super.key});
@@ -12,20 +13,38 @@ class _ReservationStep1PageState extends State<ReservationStep1Page> {
   DateTimeRange? _selectedDateRange;
   bool _withDriver = false;
 
-  // Fonction pour afficher le calendrier de sélection de la période (Date de début et de fin)
+  // Fonction pour afficher le calendrier de sélection de la période
   Future<void> _selectDateRange(BuildContext context) async {
+    final DateTime now = DateTime.now();
     final DateTimeRange? picked = await showDateRangePicker(
       context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      firstDate: DateTime(now.year, now.month, now.day),
+      lastDate: now.add(const Duration(days: 365)),
+      // Pré-sélectionne aujourd'hui et demain pour activer immédiatement le bouton Save
+      initialDateRange: _selectedDateRange ??
+          DateTimeRange(
+            start: DateTime(now.year, now.month, now.day),
+            end: DateTime(now.year, now.month, now.day).add(const Duration(days: 1)),
+          ),
+      saveText: 'VALIDER',
+      helpText: 'SÉLECTIONNER LA PÉRIODE',
       builder: (context, child) {
         return Theme(
-          data: ThemeData.light().copyWith(
+          data: Theme.of(context).copyWith(
             colorScheme: const ColorScheme.light(
               primary: Color(0xFF1E3A8A), // Bleu de nuit principal
               onPrimary: Colors.white,
               surface: Colors.white,
-              onSurface: Colors.black,
+              onSurface: Colors.black87,
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: const Color(0xFF1E3A8A), // Couleur bien visible pour VALIDER
+                textStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ),
           child: child!,
@@ -105,7 +124,7 @@ class _ReservationStep1PageState extends State<ReservationStep1Page> {
             ),
             const SizedBox(height: 15),
 
-            // Option cruciale du cahier des charges : Location avec ou sans chauffeur
+            // Option de location avec ou sans chauffeur
             SwitchListTile(
               title: const Text(
                 'Louer avec chauffeur',
@@ -123,7 +142,7 @@ class _ReservationStep1PageState extends State<ReservationStep1Page> {
 
             const Spacer(),
 
-            // Bouton de validation pour passer à l'étape suivante (Partie 9)
+            // Bouton de validation pour passer à l'étape 2 (Options et Assurances)
             SizedBox(
               width: double.infinity,
               height: 50,
@@ -136,12 +155,15 @@ class _ReservationStep1PageState extends State<ReservationStep1Page> {
                   ),
                 ),
                 onPressed: _selectedDateRange == null
-                    ? null // Désactivé tant que les dates ne sont pas renseignées
+                    ? null // Désactivé tant que les dates ne sont pas choisies
                     : () {
-                        // TODO: Navigation vers la Partie 9 (Options et Assurances)
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Dates et mode de location validés ! Passage à l\'étape 2.'),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReservationStep2Page(
+                              withDriver: _withDriver,
+                              dateRange: _selectedDateRange!,
+                            ),
                           ),
                         );
                       },
