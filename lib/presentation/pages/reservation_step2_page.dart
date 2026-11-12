@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'reservation_payment_page.dart'; 
 
 class ReservationStep2Page extends StatefulWidget {
   final bool withDriver;
@@ -10,7 +11,6 @@ class ReservationStep2Page extends StatefulWidget {
     required this.dateRange,
   });
 
- // (on utilise State standard ci-dessous)
   @override
   State<ReservationStep2Page> createState() => _ReservationStep2PageState();
 }
@@ -72,7 +72,7 @@ class _ReservationStep2PageState extends State<ReservationStep2Page> {
 
             const Divider(height: 40),
 
-            // Titre section Assurances (Exigé par le cahier des charges)
+            // Titre section Assurances
             const Text(
               'Formule d\'assurance',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -119,10 +119,14 @@ class _ReservationStep2PageState extends State<ReservationStep2Page> {
                   ),
                 ),
                 onPressed: () {
-                  // TODO: Navigation vers l'écran de Paiement sécurisé
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Options et assurance enregistrées ! Passage au paiement.'),
+                  // Navigation vers l'écran de Paiement sécurisé en transmettant les données
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ReservationPaymentPage(
+                        withDriver: widget.withDriver,
+                        dateRange: widget.dateRange,
+                      ),
                     ),
                   );
                 },
