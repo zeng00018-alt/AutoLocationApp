@@ -30,7 +30,6 @@ class VehiculeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image du véhicule (avec un conteneur temporaire si pas d'image locale)
             Container(
               height: 160,
               width: double.infinity,
